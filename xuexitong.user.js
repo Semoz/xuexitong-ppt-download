@@ -14,7 +14,9 @@ var btn  = document.createElement ('div');
 var div = document.createElement('div');
 btn.innerHTML = '<button id="myButton" type="button">点击查询课件</button>';
 btn.setAttribute ('id', 'myContainer');
+btn.setAttribute ('style', 'margin-left:400px');
 div.setAttribute ('id', 'contentdiv');
+div.setAttribute ('style', 'margin-left:400px');
 var body = document.body;
 body.insertBefore(btn, body.firstChild);
 body.insertBefore(div, body.firstChild);
@@ -43,8 +45,12 @@ function ButtonClickAction (zEvent) {
     var image;
     var max;
     $(document.getElementById('iframe').contentWindow.document.body).find("iframe").each(function() {
-        image = $(this.contentWindow.document.body).find("#img").find("img:first").attr("src");
+    	console.log(image);
+    	if(image === undefined){
+    		image = $(this.contentWindow.document.body).find("#img").find("img:first").attr("src");
         max = $(this.contentWindow.document.body).find("#navigation").find(".all").html();
+    	}
+
     });
     if(image === undefined){
         var div = document.getElementById("contentdiv");
