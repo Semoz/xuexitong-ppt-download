@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         学习通课件下载
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  try to take over the world!
 // @author       Semoz
 // @match        *://*.chaoxing.com/mycourse/studentstudy*
@@ -27,6 +27,7 @@ document.getElementById ("myButton").addEventListener (
 function ButtonClickAction (zEvent) {
 
     var html = "<div></br>";
+    var windowHtml = "<input type ='button' value ='打印此页' onClick ='window.print()'></br>";
     var title = $(document.getElementById('coursetree')).find("h4.currents a span:first").html();
     if(title === null){
         var div = document.getElementById("contentdiv");
@@ -59,6 +60,7 @@ function ButtonClickAction (zEvent) {
     }
 
     var baseimg = image.substring(0, image.lastIndexOf("/"));
+
     if(max!=undefined){
         html += "共" + max + "张</br>";
         html += "</br>";
@@ -66,6 +68,7 @@ function ButtonClickAction (zEvent) {
         html += "</br>";
         for (var i=1;i<=max;i++){
             var filename = baseimg + "/" + i + ".png";
+            windowHtml += "<img src='" + filename+ "' alt=''>";
             html += "<a target='_blank' href='" + filename + "''>"+filename+"</a>" + "</br>";
         }
     }
@@ -75,6 +78,9 @@ function ButtonClickAction (zEvent) {
     html += "</br>";
     html += "</br>";
     var div = document.getElementById("contentdiv");
+    var newWindow = window.open("");
+    newWindow.document.body.innerHTML = windowHtml;
+    newWindow.document.title = title;
     div.innerHTML = html;
 
 }
